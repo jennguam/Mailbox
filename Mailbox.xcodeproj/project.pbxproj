@@ -12,6 +12,7 @@
 		AEAB717C1C75B44E001C1FEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEAB717A1C75B44E001C1FEA /* Main.storyboard */; };
 		AEAB717E1C75B44E001C1FEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEAB717D1C75B44E001C1FEA /* Assets.xcassets */; };
 		AEAB71811C75B44E001C1FEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEAB717F1C75B44E001C1FEA /* LaunchScreen.storyboard */; };
+		AEAB71891C75B69B001C1FEA /* MailboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAB71881C75B69B001C1FEA /* MailboxViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		AEAB717D1C75B44E001C1FEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEAB71801C75B44E001C1FEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AEAB71821C75B44E001C1FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AEAB71881C75B69B001C1FEA /* MailboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailboxViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				AEAB717A1C75B44E001C1FEA /* Main.storyboard */,
 				AEAB717D1C75B44E001C1FEA /* Assets.xcassets */,
 				AEAB717F1C75B44E001C1FEA /* LaunchScreen.storyboard */,
+				AEAB71881C75B69B001C1FEA /* MailboxViewController.swift */,
 				AEAB71821C75B44E001C1FEA /* Info.plist */,
 			);
 			path = Mailbox;
@@ -138,6 +141,7 @@
 			files = (
 				AEAB71791C75B44E001C1FEA /* ViewController.swift in Sources */,
 				AEAB71771C75B44E001C1FEA /* AppDelegate.swift in Sources */,
+				AEAB71891C75B69B001C1FEA /* MailboxViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
