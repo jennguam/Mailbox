@@ -37,6 +37,7 @@ class MailboxViewController: UIViewController {
     }
     @IBAction func didPanMsg(sender:
         UIPanGestureRecognizer) {
+            
             var point = sender.locationInView(msgView)
             var velocity = sender.velocityInView(msgView)
             var translation = sender.translationInView(msgView)
@@ -47,45 +48,58 @@ class MailboxViewController: UIViewController {
                 //print("Gesture began at: \(point)")
             } else if sender.state == UIGestureRecognizerState.Changed {
                 //print("Gesture changed at: \(point)")
-                if velocity.y > 0 {
-                    if translation.x >= 60 {
-                        underMsg.backgroundColor = UIColor(red: 0.9804, green: 0.8275, blue: 0.2, alpha: 1.0)
-                    } else if translation.x >= 260 {
-                        underMsg.backgroundColor = UIColor(red: 0.8471, green: 0.651, blue: 0.4588, alpha: 1.0)
-                    }
+                if velocity.x < 0 {
+                    self.msgView.addSubview(underMsg)
+                    //self.msgView.bringSubviewToFront(msg)
                     
+                    msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
+                    if translation.x <= -60 {
+                        underMsg.backgroundColor = UIColor(red: 0.4392, green: 0.851, blue: 0.3843, alpha: 1.0)
+                        
+                    }
+                    if translation.x <= -200 {
+                        underMsg.backgroundColor = UIColor(red: 0.9216, green: 0.3294, blue: 0.2, alpha: 1.0)
+                    }
+                   
                     UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
                             self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
                             print(translation)
                         }, completion: { (Bool) -> Void in
                     })
-                    msgView.addSubview(underMsg)
+                    print(underMsg.layer.zPosition)
                     print("Gesture went right")
                 }
-                else {
+                if velocity.x > 0 {
+                    print(underMsg.layer.zPosition)
                     print("Gesture went left")
-                    if translation.x >= 60 {
-                        underMsg.backgroundColor = UIColor(red: 0.4392, green: 0.851, blue: 0.3843, alpha: 1.0)
-                    } else if translation.x >= 260 {
-                        underMsg.backgroundColor = UIColor(red: 0.9216, green: 0.3294, blue: 0.2, alpha: 1.0)
-                    }
+                    
                     
                     UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
                         self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
                         print(translation)
                         }, completion: { (Bool) -> Void in
                     })
+                    if translation.x >= 60 {
+                        underMsg.backgroundColor = UIColor(red: 0.9804, green: 0.8275, blue: 0.2, alpha: 1.0)
+                    }
+                    if translation.x >= 200 {
+                        underMsg.backgroundColor = UIColor(red: 0.8471, green: 0.651, blue: 0.4588, alpha: 1.0)
+                    }
+
+                    
+                    
                 }
                
                 
             } else if sender.state == UIGestureRecognizerState.Ended {
                 //print("Gesture ended at: \(point)")
-                
+                    msg.layer.zPosition = 1
                     UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
                         self.msgView.center = CGPoint(x: self.msgOriginalCenter.x, y: self.msgOriginalCenter.y)
-                        }, completion: { (Bool) -> Void in
+                        }, completion: { (Bool) in
+                            self.underMsg.backgroundColor = UIColor(red: 0.8863, green: 0.8863, blue: 0.8863, alpha: 1.0)
                     })
-
+                
                 
             
             }
