@@ -26,7 +26,7 @@ class MailboxViewController: UIViewController {
     
     var underMsgOriginalCenter: CGPoint!
     var msgOriginalCenter: CGPoint!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +57,12 @@ class MailboxViewController: UIViewController {
             if translation.x <= -260 {
                 underMsg.backgroundColor = UIColor(red: 216/255, green: 166/255, blue: 117/255, alpha: 1.0) /* #d8a675; brown */
             } else if translation.x <= -60 && translation.x > -260 {
-                 underMsg.backgroundColor = UIColor(red: 250/255, green: 211/255, blue: 51/255, alpha: 1.0) /* #fad333; orange */
+                underMsg.backgroundColor = UIColor(red: 250/255, green: 211/255, blue: 51/255, alpha: 1.0) /* #fad333; orange */
                 
             } else if translation.x > -60 && translation.x <= 60 {
                 underMsg.backgroundColor = UIColor(red: 0.9098, green: 0.9098, blue: 0.9098, alpha: 1.0) /* #e8e8e8; grey */
             }
-                else if translation.x > 60 && translation.x <= 260 {
+            else if translation.x > 60 && translation.x <= 260 {
                 
                 underMsg.backgroundColor = UIColor(red: 112/255, green: 217/255, blue: 98/255, alpha: 1.0) /* #70d962; green */
             } else if translation.x > 260 {
@@ -98,45 +98,82 @@ class MailboxViewController: UIViewController {
             if sender.state == UIGestureRecognizerState.Began {
                 msgOriginalCenter = msgView.center
                 underMsgOriginalCenter = underMsg.center
-                //print("Gesture began at: \(point)")
+                
+                
+                
             } else if sender.state == UIGestureRecognizerState.Changed {
                 //print("Gesture changed at: \(point)")
                 
-                     underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
-                    
-                    print(underMsgOriginalCenter.x)
-                    
-                    msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
-                    
-                    
-                    //                    UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
-                    //                            self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
-                    //                            print(translation)
-                    //                        }, completion: { (Bool) -> Void in
-                    //                    })
-                    
-                    print("Gesture went right")
+                underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
                 
-               
-                    print("Gesture went left")
-                    
-                    
-                    UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
-                        self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
-                        self.underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
-                        print(translation)
-                        }, completion: { (Bool) -> Void in
-                    })
+                print(underMsgOriginalCenter.x)
+                
+                msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
+                
+                
+                
+                UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
+                    self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
+                    self.underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
+                    print(translation)
+                    }, completion: { (Bool) -> Void in
+                })
                 
             } else if sender.state == UIGestureRecognizerState.Ended {
-                //print("Gesture ended at: \(point)")
-                 self.underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x, y: self.underMsgOriginalCenter.y)
+                
+                self.underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x, y: self.underMsgOriginalCenter.y)
+                
                 UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
                     self.msgView.center = CGPoint(x: self.msgOriginalCenter.x, y: self.msgOriginalCenter.y)
                     }, completion: { (Bool) in
                         self.underMsg.backgroundColor = UIColor(red: 0.8863, green: 0.8863, blue: 0.8863, alpha: 1.0)
-                       
+                        
                 })
+                
+                if (translation.x <= -260.0) {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.msg.center.x = -320
+                        //self.listImageView.alpha = 1.0
+                    })
+                } else if ((translation.x > -260) && (translation.x <= -60)) {
+                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                        self.msgView.center.x = -320
+                        //self.rescheduleImageView.alpha = 1.0
+                    })
+                } else if ((translation.x > -60) && (translation.x <= 60)) {
+                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                        self.msgView.center.x = 160
+                    })
+                } else if ((translation.x > 60) && (translation.x <= 260)) {
+                    UIView.animateWithDuration(0.1, animations: { () -> Void in
+                        self.msgView.center.x = 500
+                        })  { (finished: Bool) -> Void in
+                            UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
+                                //                                self.feedImageView.center.y = self.feedImageView.center.y - 86
+                                }) { (finished: Bool) -> Void in
+                                    self.msgView.center.x = 160
+                                    UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                                        //self.feedImageView.center.y = self.feedImageView.center.y + 86
+                                        }) { (Bool) -> Void in
+                                    }
+                            }
+                    }
+                } else if (translation.x > 260) {
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.msgView.center.x = 500
+                        })  { (finished: Bool) -> Void in
+                            UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
+                                //self.feedImageView.center.y = self.feedImageView.center.y - 86
+                                }) { (finished: Bool) -> Void in
+                                    self.msgView.center.x = 160
+                                    UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                                        //self.feedImageView.center.y = self.feedImageView.center.y + 86
+                                        }) { (Bool) -> Void in
+                                    }
+                            }
+                    }
+                }
+                
                 
                 
                 
