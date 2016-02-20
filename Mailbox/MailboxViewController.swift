@@ -57,20 +57,21 @@ class MailboxViewController: UIViewController {
             self.msgView.center.x = self.msgOriginalCenter.x
             print(self.msgView.center.x)
             })  { (finished: Bool) -> Void in
-                UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
                     //moving other messages up
-                    self.otherMsg.center.y = self.otherMsg.center.y - 78
+                    self.otherMsg.center.y -= 85
+                    
                     }) { (finished: Bool) -> Void in
                         UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
                             //moving message back
-                            self.msgView.center.x = self.msgOriginalCenter.x
+                            self.otherMsg.center.y += 85
                             }, completion: { (Bool) -> Void in
                                 
                         })
                 }
         }
     }
-
+    
     
     @IBAction func didTapList(sender: AnyObject) {
         self.listView.alpha = 0
@@ -79,19 +80,20 @@ class MailboxViewController: UIViewController {
             self.msgView.center.x = self.msgOriginalCenter.x
             print(self.msgView.center.x)
             })  { (finished: Bool) -> Void in
-                UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
                     //moving other messages up
-                    self.otherMsg.center.y = self.otherMsg.center.y - 78
+                    self.otherMsg.center.y -= 85
                     }) { (finished: Bool) -> Void in
                         UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
                             //moving message back
-                            self.msgView.center.x = self.msgOriginalCenter.x
+                            
+                            self.otherMsg.center.y += 85
                             }, completion: { (Bool) -> Void in
                                 
                         })
                 }
         }
-
+        
         
     }
     
@@ -171,14 +173,14 @@ class MailboxViewController: UIViewController {
                 
                 self.underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x, y: self.underMsgOriginalCenter.y)
                 
-                UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
+                UIView.animateWithDuration(0.4, delay: 0.2,  options:[] , animations: { () -> Void in
                     self.msgView.center = CGPoint(x: self.msgOriginalCenter.x, y: self.msgOriginalCenter.y)
                     }, completion: { (Bool) in
                         self.underMsg.backgroundColor = UIColor(red: 0.8863, green: 0.8863, blue: 0.8863, alpha: 1.0)
                         
                 })
                 
-                if (translation.x <= -260.0) {
+                if (translation.x <= -260) {
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.msg.center.x = -320
                         self.listView.alpha = 1.0
@@ -187,7 +189,7 @@ class MailboxViewController: UIViewController {
                     UIView.animateWithDuration(0.5, animations: { () -> Void in
                         self.msgView.center.x = -320
                         self.rescheduleView.alpha = 1.0
-                        //self.listView.alpha = 0
+                        self.listView.alpha = 0
                     })
                 } else if ((translation.x > -60) && (translation.x <= 60)) {
                     UIView.animateWithDuration(0.5, animations: { () -> Void in
@@ -197,12 +199,12 @@ class MailboxViewController: UIViewController {
                     UIView.animateWithDuration(0.1, animations: { () -> Void in
                         self.msgView.center.x = 500
                         })  { (finished: Bool) -> Void in
-                            UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
-                                //                                self.feedImageView.center.y = self.feedImageView.center.y - 86
+                            UIView.animateWithDuration(0.3, delay: 0, options: [], animations: { () -> Void in
+                                self.otherMsg.center.y -= 85
                                 }) { (finished: Bool) -> Void in
                                     self.msgView.center.x = 160
                                     UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
-                                        //self.feedImageView.center.y = self.feedImageView.center.y + 86
+                                        self.otherMsg.center.y += 85
                                         }) { (Bool) -> Void in
                                     }
                             }
@@ -211,12 +213,12 @@ class MailboxViewController: UIViewController {
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         self.msgView.center.x = 500
                         })  { (finished: Bool) -> Void in
-                            UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
-                                //self.feedImageView.center.y = self.feedImageView.center.y - 86
+                            UIView.animateWithDuration(0.3, delay: 0, options: [], animations: { () -> Void in
+                                    self.otherMsg.center.y -= 85
                                 }) { (finished: Bool) -> Void in
                                     self.msgView.center.x = 160
                                     UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
-                                        //self.feedImageView.center.y = self.feedImageView.center.y + 86
+                                        self.otherMsg.center.y += 85
                                         }) { (Bool) -> Void in
                                     }
                             }
