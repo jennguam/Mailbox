@@ -15,14 +15,15 @@ class MailboxViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var msgView: UIView!
     @IBOutlet var underMsg: UIView!
-    
+    @IBOutlet var otherMsg: UIImageView!
     @IBOutlet var rightView: UIView!
     @IBOutlet var leftView: UIView!
     @IBOutlet var laterIcon: UIImageView!
     @IBOutlet var archiveIcon: UIImageView!
     @IBOutlet var listIcon: UIImageView!
     @IBOutlet var deleteIcon: UIImageView!
-    
+    @IBOutlet var rescheduleView: UIImageView!
+    @IBOutlet var listView: UIImageView!
     
     var underMsgOriginalCenter: CGPoint!
     var msgOriginalCenter: CGPoint!
@@ -36,7 +37,9 @@ class MailboxViewController: UIViewController {
         msgView.userInteractionEnabled = true
         msgView.addGestureRecognizer(panGestureRecognizer)
         
-        // swipe icons
+        //hide all the things
+        rescheduleView.alpha = 0
+        listView.alpha = 0
         laterIcon.alpha = 0
         listIcon.alpha = 0
         deleteIcon.alpha = 0
@@ -47,6 +50,51 @@ class MailboxViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func onTapReschedule(sender: AnyObject) {
+        self.rescheduleView.alpha = 0
+        //self.msgView.center.x = 160
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.msgView.center.x = self.msgOriginalCenter.x
+            print(self.msgView.center.x)
+            })  { (finished: Bool) -> Void in
+                UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                    //moving other messages up
+                    self.otherMsg.center.y = self.otherMsg.center.y - 78
+                    }) { (finished: Bool) -> Void in
+                        UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                            //moving message back
+                            self.msgView.center.x = self.msgOriginalCenter.x
+                            }, completion: { (Bool) -> Void in
+                                
+                        })
+                }
+        }
+    }
+
+    
+    @IBAction func didTapList(sender: AnyObject) {
+        self.listView.alpha = 0
+        //self.msgView.center.x = 160
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.msgView.center.x = self.msgOriginalCenter.x
+            print(self.msgView.center.x)
+            })  { (finished: Bool) -> Void in
+                UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                    //moving other messages up
+                    self.otherMsg.center.y = self.otherMsg.center.y - 78
+                    }) { (finished: Bool) -> Void in
+                        UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
+                            //moving message back
+                            self.msgView.center.x = self.msgOriginalCenter.x
+                            }, completion: { (Bool) -> Void in
+                                
+                        })
+                }
+        }
+
+        
+    }
+    
     @IBAction func didPanMsg(sender:
         UIPanGestureRecognizer) {
             
@@ -133,12 +181,13 @@ class MailboxViewController: UIViewController {
                 if (translation.x <= -260.0) {
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.msg.center.x = -320
-                        //self.listImageView.alpha = 1.0
+                        self.listView.alpha = 1.0
                     })
                 } else if ((translation.x > -260) && (translation.x <= -60)) {
                     UIView.animateWithDuration(0.5, animations: { () -> Void in
                         self.msgView.center.x = -320
-                        //self.rescheduleImageView.alpha = 1.0
+                        self.rescheduleView.alpha = 1.0
+                        //self.listView.alpha = 0
                     })
                 } else if ((translation.x > -60) && (translation.x <= 60)) {
                     UIView.animateWithDuration(0.5, animations: { () -> Void in

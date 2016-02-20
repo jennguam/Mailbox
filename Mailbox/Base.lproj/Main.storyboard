@@ -36,10 +36,6 @@
                                 <rect key="frame" x="0.0" y="149" width="320" height="427"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="feed" id="3Z0-1m-4Em">
-                                        <rect key="frame" x="0.0" y="78" width="320" height="1202"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
                                     <view contentMode="scaleToFill" id="bQa-qC-6Xh" userLabel="messageView">
                                         <rect key="frame" x="0.0" y="1" width="320" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -90,11 +86,31 @@
                                         </subviews>
                                         <gestureRecognizers/>
                                     </view>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="feed" id="3Z0-1m-4Em" userLabel="otherMsg">
+                                        <rect key="frame" x="0.0" y="78" width="320" height="1202"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                 </subviews>
                             </scrollView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="search" id="f3s-xN-jN1">
                                 <rect key="frame" x="0.0" y="99" width="320" height="42"/>
                                 <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="reschedule" id="OOP-dB-f74">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="yn5-kS-kBK" appends="YES" id="mz7-mh-XHn"/>
+                                </connections>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list" id="eQR-4I-PSZ" userLabel="listView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="wo1-Nq-EkJ" appends="YES" id="Vy0-l2-TgM"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -110,18 +126,31 @@
                         <outlet property="laterIcon" destination="PPu-DG-0E4" id="6EQ-av-mbH"/>
                         <outlet property="leftView" destination="5wI-gX-Fgo" id="jfM-vg-YyY"/>
                         <outlet property="listIcon" destination="eMy-FO-9hk" id="pq1-pr-5sv"/>
+                        <outlet property="listView" destination="eQR-4I-PSZ" id="GRN-k0-sbS"/>
                         <outlet property="msg" destination="grD-G0-Z8o" id="m36-9B-75g"/>
                         <outlet property="msgView" destination="bQa-qC-6Xh" id="W5h-bL-sJu"/>
+                        <outlet property="otherMsg" destination="3Z0-1m-4Em" id="gwN-Vm-YgP"/>
+                        <outlet property="rescheduleView" destination="OOP-dB-f74" id="PBd-8j-TdI"/>
                         <outlet property="rightView" destination="Rqp-Kw-d3P" id="hfV-xN-Pnk"/>
                         <outlet property="scrollView" destination="aom-WI-2Fx" id="XGJ-41-efb"/>
                         <outlet property="underMsg" destination="JxJ-m3-6Jo" id="foN-yi-BS7"/>
                     </connections>
                 </viewController>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Bd0-xC-Ns2">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Bd0-xC-Ns2" userLabel="onPanMsg">
                     <connections>
                         <action selector="didPanMsg:" destination="BYZ-38-t0r" id="tP0-lX-LIx"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer id="yn5-kS-kBK" userLabel="onTapReschedule">
+                    <connections>
+                        <action selector="onTapReschedule:" destination="BYZ-38-t0r" id="WoT-91-RA0"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="wo1-Nq-EkJ" userLabel="onTapList">
+                    <connections>
+                        <action selector="didTapList:" destination="BYZ-38-t0r" id="mP9-Do-hIw"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="162" y="366"/>
         </scene>
@@ -133,10 +162,12 @@
         <image name="feed" width="320" height="1202"/>
         <image name="help_label" width="320" height="37"/>
         <image name="later_icon" width="25" height="25"/>
+        <image name="list" width="320" height="568"/>
         <image name="list_icon" width="25" height="25"/>
         <image name="mail_nav_icon" width="25" height="20"/>
         <image name="message" width="320" height="86"/>
         <image name="nav" width="320" height="65"/>
+        <image name="reschedule" width="320" height="568"/>
         <image name="search" width="320" height="42"/>
     </resources>
 </document>
