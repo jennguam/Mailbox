@@ -48,19 +48,39 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="later_icon" id="PPu-DG-0E4">
-                                                        <rect key="frame" x="278" y="28" width="25" height="25"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                    </imageView>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="archive_icon" id="bxd-Eu-Z2H">
-                                                        <rect key="frame" x="19" y="26" width="25" height="25"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                    </imageView>
+                                                    <view contentMode="scaleToFill" id="5wI-gX-Fgo" userLabel="leftView">
+                                                        <rect key="frame" x="12" y="22" width="39" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <subviews>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="delete_icon" id="WrA-xA-Y6y">
+                                                                <rect key="frame" x="7" y="5" width="25" height="25"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </imageView>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="archive_icon" id="bxd-Eu-Z2H">
+                                                                <rect key="frame" x="7" y="8" width="25" height="25"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" id="Rqp-Kw-d3P" userLabel="rightView">
+                                                        <rect key="frame" x="271" y="22" width="39" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <subviews>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="later_icon" id="PPu-DG-0E4">
+                                                                <rect key="frame" x="7" y="5" width="25" height="25"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </imageView>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list_icon" id="eMy-FO-9hk">
+                                                                <rect key="frame" x="7" y="5" width="25" height="25"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="message" id="grD-G0-Z8o">
-                                                <rect key="frame" x="0.0" y="1" width="320" height="78"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <gestureRecognizers/>
                                                 <connections>
@@ -84,9 +104,15 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="archiveIcon" destination="bxd-Eu-Z2H" id="ra7-Lk-UVc"/>
+                        <outlet property="deleteIcon" destination="WrA-xA-Y6y" id="xaf-Wb-yH6"/>
                         <outlet property="imageView" destination="3Z0-1m-4Em" id="2LV-6l-bR1"/>
+                        <outlet property="laterIcon" destination="PPu-DG-0E4" id="6EQ-av-mbH"/>
+                        <outlet property="leftView" destination="5wI-gX-Fgo" id="jfM-vg-YyY"/>
+                        <outlet property="listIcon" destination="eMy-FO-9hk" id="pq1-pr-5sv"/>
                         <outlet property="msg" destination="grD-G0-Z8o" id="m36-9B-75g"/>
                         <outlet property="msgView" destination="bQa-qC-6Xh" id="W5h-bL-sJu"/>
+                        <outlet property="rightView" destination="Rqp-Kw-d3P" id="hfV-xN-Pnk"/>
                         <outlet property="scrollView" destination="aom-WI-2Fx" id="XGJ-41-efb"/>
                         <outlet property="underMsg" destination="JxJ-m3-6Jo" id="foN-yi-BS7"/>
                     </connections>
@@ -103,9 +129,11 @@
     <resources>
         <image name="archive_icon" width="25" height="25"/>
         <image name="archive_nav_icon" width="25" height="20"/>
+        <image name="delete_icon" width="25" height="25"/>
         <image name="feed" width="320" height="1202"/>
         <image name="help_label" width="320" height="37"/>
         <image name="later_icon" width="25" height="25"/>
+        <image name="list_icon" width="25" height="25"/>
         <image name="mail_nav_icon" width="25" height="20"/>
         <image name="message" width="320" height="86"/>
         <image name="nav" width="320" height="65"/>

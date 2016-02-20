@@ -14,14 +14,19 @@ class MailboxViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var msgView: UIView!
-    var msgOriginalCenter: CGPoint!
     @IBOutlet var underMsg: UIView!
-    //    var msgOffset: CGFloat!
-    //    var msgLeft: CGPoint!
-    //    var msgRight: CGPoint!
+    
+    @IBOutlet var rightView: UIView!
+    @IBOutlet var leftView: UIView!
+    @IBOutlet var laterIcon: UIImageView!
+    @IBOutlet var archiveIcon: UIImageView!
+    @IBOutlet var listIcon: UIImageView!
+    @IBOutlet var deleteIcon: UIImageView!
+    
     
     var underMsgOriginalCenter: CGPoint!
-    
+    var msgOriginalCenter: CGPoint!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +35,12 @@ class MailboxViewController: UIViewController {
         
         msgView.userInteractionEnabled = true
         msgView.addGestureRecognizer(panGestureRecognizer)
-        // Do any additional setup after loading the view.
+        
+        // swipe icons
+        laterIcon.alpha = 0
+        listIcon.alpha = 0
+        deleteIcon.alpha = 0
+        archiveIcon.alpha = 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,9 +50,49 @@ class MailboxViewController: UIViewController {
     @IBAction func didPanMsg(sender:
         UIPanGestureRecognizer) {
             
-            var point = sender.locationInView(msgView)
-            var velocity = sender.velocityInView(msgView)
-            var translation = sender.translationInView(msgView)
+            let velocity = sender.velocityInView(msgView)
+            let translation = sender.translationInView(msgView)
+            
+            //Changing under message background colors
+            if translation.x <= -260 {
+                underMsg.backgroundColor = UIColor(red: 216/255, green: 166/255, blue: 117/255, alpha: 1.0) /* #d8a675; brown */
+            } else if translation.x <= -60 && translation.x > -260 {
+                 underMsg.backgroundColor = UIColor(red: 250/255, green: 211/255, blue: 51/255, alpha: 1.0) /* #fad333; orange */
+                
+            } else if translation.x > -60 && translation.x <= 60 {
+                underMsg.backgroundColor = UIColor(red: 0.9098, green: 0.9098, blue: 0.9098, alpha: 1.0) /* #e8e8e8; grey */
+            }
+                else if translation.x > 60 && translation.x <= 260 {
+                
+                underMsg.backgroundColor = UIColor(red: 112/255, green: 217/255, blue: 98/255, alpha: 1.0) /* #70d962; green */
+            } else if translation.x > 260 {
+                underMsg.backgroundColor = UIColor(red: 235/255, green: 84/255, blue: 51/255, alpha: 1.0) /* #eb5433, red */
+            }
+            
+            //handling icons
+            
+            // change and move icon
+            if (translation.x <= -260.0) {
+                self.laterIcon.alpha = 0
+                self.listIcon.alpha = 1
+                self.rightView.center.x = 287.5 + 60 + translation.x
+            } else if ((translation.x > -260) && (translation.x <= -60)) {
+                self.laterIcon.alpha = 1.0
+                self.listIcon.alpha = 0.0
+                self.rightView.center.x = 287.5 + 60 + translation.x
+            } else if ((translation.x > -60) && (translation.x <= 60)) {
+                self.archiveIcon.alpha = (translation.x/60)*1.0
+                self.laterIcon.alpha = -(translation.x/60)*1.0
+            } else if ((translation.x > 60) && (translation.x <= 260)) {
+                self.deleteIcon.alpha = 0.0
+                self.archiveIcon.alpha = 1.0
+                self.leftView.center.x = 32.5 - 60 + translation.x
+            } else if (translation.x > 260) {
+                self.deleteIcon.alpha = 1.0
+                self.archiveIcon.alpha = 0.0
+                self.leftView.center.x = 32.5 - 60 + translation.x
+            }
+            
             
             
             if sender.state == UIGestureRecognizerState.Began {
@@ -51,18 +101,13 @@ class MailboxViewController: UIViewController {
                 //print("Gesture began at: \(point)")
             } else if sender.state == UIGestureRecognizerState.Changed {
                 //print("Gesture changed at: \(point)")
-                if velocity.x < 0 {
-                    underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
+                
+                     underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
+                    
                     print(underMsgOriginalCenter.x)
                     
                     msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
-                    if translation.x <= -60 {
-                        underMsg.backgroundColor = UIColor(red: 0.9804, green: 0.8275, blue: 0.2, alpha: 1.0)
-                        
-                    }
-                    if translation.x <= -200 {
-                        underMsg.backgroundColor = UIColor(red: 0.8471, green: 0.651, blue: 0.4588, alpha: 1.0)
-                    }
+                    
                     
                     //                    UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
                     //                            self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
@@ -71,9 +116,8 @@ class MailboxViewController: UIViewController {
                     //                    })
                     
                     print("Gesture went right")
-                }
-                if velocity.x > 0 {
-                    print(underMsg.layer.zPosition)
+                
+               
                     print("Gesture went left")
                     
                     
@@ -83,20 +127,6 @@ class MailboxViewController: UIViewController {
                         print(translation)
                         }, completion: { (Bool) -> Void in
                     })
-                    if translation.x >= 60 {
-                         underMsg.backgroundColor = UIColor(red: 0.4392, green: 0.851, blue: 0.3843, alpha: 1.0)
-                        
-                    }
-                    if translation.x >= 200 {
-                        
-                        
-                        underMsg.backgroundColor = UIColor(red: 0.9216, green: 0.3294, blue: 0.2, alpha: 1.0)
-                    }
-                    
-                    
-                    
-                }
-                
                 
             } else if sender.state == UIGestureRecognizerState.Ended {
                 //print("Gesture ended at: \(point)")
