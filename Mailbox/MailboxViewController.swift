@@ -122,28 +122,40 @@ class MailboxViewController: UIViewController {
             //handling icons
             
             // change and move icon
+            print("translation pre: ")
+            print(translation.x)
             if (translation.x <= -260.0) {
                 self.laterIcon.alpha = 0
                 self.listIcon.alpha = 1
+                self.deleteIcon.alpha = 0
+                self.archiveIcon.alpha = 0
                 self.rightView.center.x = 287.5 + 60 + translation.x
-            } else if ((translation.x > -260) && (translation.x <= -60)) {
-                self.laterIcon.alpha = 1.0
-                self.listIcon.alpha = 0.0
+            } else if (translation.x > -260 && translation.x <= -60) {
+                self.laterIcon.alpha = 1
+                self.listIcon.alpha = 0
+                self.deleteIcon.alpha = 0
+                self.archiveIcon.alpha = 0
                 self.rightView.center.x = 287.5 + 60 + translation.x
-            } else if ((translation.x > -60) && (translation.x <= 60)) {
+            } else if (translation.x > -60 && translation.x <= 60) {
                 self.archiveIcon.alpha = (translation.x/60)*1.0
                 self.laterIcon.alpha = -(translation.x/60)*1.0
-            } else if ((translation.x > 60) && (translation.x <= 260)) {
-                self.deleteIcon.alpha = 0.0
-                self.archiveIcon.alpha = 1.0
+                self.deleteIcon.alpha = 0
+                self.listIcon.alpha = 0
+            } else if (translation.x > 60 && translation.x <= 260) {
+                self.deleteIcon.alpha = 0
+                self.archiveIcon.alpha = 1
+                self.laterIcon.alpha = 0
                 self.leftView.center.x = 32.5 - 60 + translation.x
             } else if (translation.x > 260) {
-                self.deleteIcon.alpha = 1.0
-                self.archiveIcon.alpha = 0.0
+                self.deleteIcon.alpha = 1
+                self.laterIcon.alpha = 0
+                self.listIcon.alpha = 0
+                self.archiveIcon.alpha = 0
                 self.leftView.center.x = 32.5 - 60 + translation.x
             }
             
-            
+            print("translation post:")
+            print(translation.x)
             
             if sender.state == UIGestureRecognizerState.Began {
                 msgOriginalCenter = msgView.center
@@ -182,7 +194,7 @@ class MailboxViewController: UIViewController {
                 
                 if (translation.x <= -260) {
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        self.msg.center.x = -320
+                        self.msgView.center.x = -320
                         self.listView.alpha = 1.0
                     })
                 } else if ((translation.x > -260) && (translation.x <= -60)) {
