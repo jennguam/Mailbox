@@ -60,9 +60,8 @@ class MailboxViewController: UIViewController {
     }
     @IBAction func onTapReschedule(sender: AnyObject) {
         self.rescheduleView.alpha = 0
-        //self.msgView.center.x = 160
+        self.msgView.center.x = self.msgOriginalCenter.x
         UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.msgView.center.x = self.msgOriginalCenter.x
             print(self.msgView.center.x)
             })  { (finished: Bool) -> Void in
                 UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
@@ -83,9 +82,8 @@ class MailboxViewController: UIViewController {
     
     @IBAction func didTapList(sender: AnyObject) {
         self.listView.alpha = 0
-        //self.msgView.center.x = 160
+        self.msgView.center.x = self.msgOriginalCenter.x
         UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.msgView.center.x = self.msgOriginalCenter.x
             print(self.msgView.center.x)
             })  { (finished: Bool) -> Void in
                 UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
@@ -108,7 +106,6 @@ class MailboxViewController: UIViewController {
     @IBAction func onTapMenu(sender: UITapGestureRecognizer) {
         self.menu.alpha = 0
         self.screenView.center = CGPoint(x:screenViewOriginalCenter.x, y:screenViewOriginalCenter.y)
-        print("menu tapped")
     }
     @IBAction func didPanMsg(sender:
         UIPanGestureRecognizer) {
@@ -134,8 +131,6 @@ class MailboxViewController: UIViewController {
             //handling icons
             
             // change and move icon
-            print("translation pre: ")
-            print(translation.x)
             if (translation.x <= -260.0) {
                 self.laterIcon.alpha = 0
                 self.listIcon.alpha = 1
@@ -165,14 +160,12 @@ class MailboxViewController: UIViewController {
                 self.archiveIcon.alpha = 0
                 self.leftView.center.x = 32.5 - 60 + translation.x
             }
-
+            
             
             if sender.state == UIGestureRecognizerState.Began {
                 
                 
             } else if sender.state == UIGestureRecognizerState.Changed {
-                //print("Gesture changed at: \(point)")
-                
                 underMsg.center = CGPoint(x: self.underMsgOriginalCenter.x - translation.x, y: self.underMsgOriginalCenter.y)
                 
                 print(underMsgOriginalCenter.x)
@@ -254,24 +247,19 @@ class MailboxViewController: UIViewController {
         menu.alpha = 1
         print("screenView.center.x: \(screenView.center.x)")
         if sender.state == UIGestureRecognizerState.Began {
-            print("it began")
             print (screenView.center)
             self.screenView.center.x = 160
         } else if (sender.state == UIGestureRecognizerState.Changed && screenView.center.x >= 160) {
-            print("it changed")
             
-             screenView.center = CGPoint(x:screenViewOriginalCenter.x + translation.x, y:screenViewOriginalCenter.y)
+            screenView.center = CGPoint(x:screenViewOriginalCenter.x + translation.x, y:screenViewOriginalCenter.y)
         }
         else if sender.state == UIGestureRecognizerState.Ended {
-            print("it ended")
             if screenView.center.x >= 320 {
-                print ("in > 320")
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.screenView.center.x = 480
                 })
             }
             if screenView.center.x < 320 {
-                print ("in <320")
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.screenView.center.x = 160
                 })
