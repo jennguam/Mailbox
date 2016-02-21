@@ -149,8 +149,8 @@ class MailboxViewController: UIViewController {
                 self.archiveIcon.alpha = 0
                 self.rightView.center.x = 287.5 + 60 + translation.x
             } else if (translation.x > -60 && translation.x <= 60) {
-                self.archiveIcon.alpha = (translation.x/60)*1
-                self.laterIcon.alpha = -(translation.x/60)*1
+                self.archiveIcon.alpha = (translation.x/60)
+                self.laterIcon.alpha = -(translation.x/60)
                 self.deleteIcon.alpha = 0
                 self.listIcon.alpha = 0
             } else if (translation.x > 60 && translation.x <= 260) {
