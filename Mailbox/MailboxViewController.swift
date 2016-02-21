@@ -24,10 +24,14 @@ class MailboxViewController: UIViewController {
     @IBOutlet var deleteIcon: UIImageView!
     @IBOutlet var rescheduleView: UIImageView!
     @IBOutlet var listView: UIImageView!
+    @IBOutlet var inboxView: UIView!
+    @IBOutlet var screenView: UIView!
+    @IBOutlet var menu: UIImageView!
+    
     
     var underMsgOriginalCenter: CGPoint!
     var msgOriginalCenter: CGPoint!
-    
+    var screenViewOriginalCenter: CGPoint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +40,10 @@ class MailboxViewController: UIViewController {
         
         msgView.userInteractionEnabled = true
         msgView.addGestureRecognizer(panGestureRecognizer)
+        
+        screenViewOriginalCenter = screenView.center
+        msgOriginalCenter = msgView.center
+        underMsgOriginalCenter = underMsg.center
         
         //hide all the things
         rescheduleView.alpha = 0
@@ -97,10 +105,14 @@ class MailboxViewController: UIViewController {
         
     }
     
+    @IBAction func onTapMenu(sender: UITapGestureRecognizer) {
+        self.menu.alpha = 0
+        self.screenView.center = CGPoint(x:screenViewOriginalCenter.x, y:screenViewOriginalCenter.y)
+        print("menu tapped")
+    }
     @IBAction func didPanMsg(sender:
         UIPanGestureRecognizer) {
             
-            let velocity = sender.velocityInView(msgView)
             let translation = sender.translationInView(msgView)
             
             //Changing under message background colors
@@ -137,8 +149,8 @@ class MailboxViewController: UIViewController {
                 self.archiveIcon.alpha = 0
                 self.rightView.center.x = 287.5 + 60 + translation.x
             } else if (translation.x > -60 && translation.x <= 60) {
-                self.archiveIcon.alpha = (translation.x/60)*1.0
-                self.laterIcon.alpha = -(translation.x/60)*1.0
+                self.archiveIcon.alpha = (translation.x/60)*1
+                self.laterIcon.alpha = -(translation.x/60)*1
                 self.deleteIcon.alpha = 0
                 self.listIcon.alpha = 0
             } else if (translation.x > 60 && translation.x <= 260) {
@@ -153,14 +165,9 @@ class MailboxViewController: UIViewController {
                 self.archiveIcon.alpha = 0
                 self.leftView.center.x = 32.5 - 60 + translation.x
             }
-            
-            print("translation post:")
-            print(translation.x)
+
             
             if sender.state == UIGestureRecognizerState.Began {
-                msgOriginalCenter = msgView.center
-                underMsgOriginalCenter = underMsg.center
-                
                 
                 
             } else if sender.state == UIGestureRecognizerState.Changed {
@@ -171,8 +178,6 @@ class MailboxViewController: UIViewController {
                 print(underMsgOriginalCenter.x)
                 
                 msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
-                
-                
                 
                 UIView.animateWithDuration(0, delay: 0, options:[] , animations: { () -> Void in
                     self.msgView.center = CGPoint(x: self.msgOriginalCenter.x + translation.x, y: self.msgOriginalCenter.y)
@@ -226,7 +231,7 @@ class MailboxViewController: UIViewController {
                         self.msgView.center.x = 500
                         })  { (finished: Bool) -> Void in
                             UIView.animateWithDuration(0.3, delay: 0, options: [], animations: { () -> Void in
-                                    self.otherMsg.center.y -= 85
+                                self.otherMsg.center.y -= 85
                                 }) { (finished: Bool) -> Void in
                                     self.msgView.center.x = 160
                                     UIView.animateWithDuration(0.5, delay: 1, options: [], animations: { () -> Void in
@@ -244,5 +249,37 @@ class MailboxViewController: UIViewController {
             
     }
     
+    @IBAction func onPanInbox(sender: UIScreenEdgePanGestureRecognizer) {
+        let translation = sender.translationInView(screenView)
+        menu.alpha = 1
+        print("screenView.center.x: \(screenView.center.x)")
+        if sender.state == UIGestureRecognizerState.Began {
+            print("it began")
+            print (screenView.center)
+            self.screenView.center.x = 160
+        } else if (sender.state == UIGestureRecognizerState.Changed && screenView.center.x >= 160) {
+            print("it changed")
+            
+             screenView.center = CGPoint(x:screenViewOriginalCenter.x + translation.x, y:screenViewOriginalCenter.y)
+        }
+        else if sender.state == UIGestureRecognizerState.Ended {
+            print("it ended")
+            if screenView.center.x >= 320 {
+                print ("in > 320")
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.screenView.center.x = 480
+                })
+            }
+            if screenView.center.x < 320 {
+                print ("in <320")
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.screenView.center.x = 160
+                })
+            }
+            
+        }
+    }
     
 }
+
+
